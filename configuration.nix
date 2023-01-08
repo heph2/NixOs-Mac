@@ -29,6 +29,7 @@
       "xournal-plus-plus"
       "transmission"
       "vlc"
+      "gimp"
       "chromium"
       "docker"
       "insomnia"
