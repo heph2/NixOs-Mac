@@ -186,6 +186,7 @@ uniq -c";
 
   home.packages = with pkgs; [
     cowsay
+    imagemagick
     clojure
     dive
     tree
