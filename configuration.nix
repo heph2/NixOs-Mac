@@ -29,6 +29,7 @@
       "xournal-plus-plus"
       "transmission"
       "vlc"
+      "epic-games"
       "gimp"
       "chromium"
       "docker"
