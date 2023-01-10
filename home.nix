@@ -195,6 +195,8 @@ uniq -c";
     catgirl
     zathura
     jq
+    youtube-dl
+    ytfzf
     gitflow
     wget
     terraform
