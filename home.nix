@@ -103,6 +103,7 @@ with lib;
       end
       source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
       eval (direnv hook fish)
+      set -gx PATH $PATH $HOME/.krew/bin
       '';
       shellAliases = {
         dw = "darwin-rebuild switch --flake '.#heph'";
@@ -205,6 +206,7 @@ uniq -c";
     kustomize
     k9s
     kubectl
+    krew
     argocd
     kubernetes-helm
     openssl    
