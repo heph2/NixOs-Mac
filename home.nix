@@ -199,6 +199,7 @@ uniq -c";
     youtube-dl
     ytfzf
     gitflow
+    got
     wget
     terraform
     kubernetes-helm
