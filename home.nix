@@ -213,7 +213,7 @@ uniq -c";
     openssl    
     yamllint
     neovim
-    ncdu
+#    ncdu
     mg
     nodePackages.npm
     nodePackages.npm-check-updates
