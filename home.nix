@@ -155,7 +155,9 @@ uniq -c";
           __fish_plass = {
             body = ''
               if set x (plass find $argv | fzf)
-                 plass cat $x
+                 plass cat $x | while read -f field
+                    echo $field
+                 end | fzf | pbcopy
               end
             '';
           };

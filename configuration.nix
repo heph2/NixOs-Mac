@@ -45,6 +45,7 @@
       "tunnelblick"
       "syncplay"
       "anydesk"
+      "raycast"
       "intellij-idea-ce"
       "utm"
       "karabiner-elements"
