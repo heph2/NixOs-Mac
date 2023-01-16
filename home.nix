@@ -113,6 +113,7 @@ with lib;
         k = "kubectl";
         sat = "__fish_saturn";
         plass-fish = "__fish_plass";
+        plass-fish-edit = "__fish_plass-edit";
 	k-argo = "kubectl port-forward svc/argocd-server -n argocd 8080:443";
 	pod-start = "podman machine start";
         k-prod = "k config use-context gke_davinci-1eea1_europe-west3_cluster-production";
@@ -161,6 +162,13 @@ uniq -c";
               end
             '';
           };
+         __fish_plass-edit = {
+           body = ''
+             if set x (plass find $argv | fzf)
+                plass edit $x
+             end
+           '';
+         };
          __fish_kubectl_ns_remover = {
            body = ''
              for i in (kubectl get ns | awk '{ print $1 }')
@@ -194,6 +202,7 @@ uniq -c";
     dive
     tree
     act
+    bitwarden-cli
     cmake
     catgirl
     zathura
