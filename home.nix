@@ -111,6 +111,7 @@ with lib;
         wake-fenrir = "wakeonlan 00:d8:61:d8:be:d1";
         d = "docker";
         k = "kubectl";
+        c = "cargo";
         sat = "__fish_saturn";
         plass-fish = "__fish_plass";
         plass-fish-edit = "__fish_plass-edit";
