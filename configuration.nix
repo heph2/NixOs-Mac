@@ -34,6 +34,7 @@
       "chiaki"
       "gimp"
       "chromium"
+      "mumble"
       "docker"
       "insomnia"
       "android-platform-tools"

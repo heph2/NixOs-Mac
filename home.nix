@@ -205,6 +205,7 @@ uniq -c";
     act
     bitwarden-cli
     cmake
+    netcat
     catgirl
     zathura
     jq
