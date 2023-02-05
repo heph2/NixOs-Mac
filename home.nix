@@ -104,6 +104,7 @@ with lib;
       source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
       eval (direnv hook fish)
       set -gx PATH $PATH $HOME/.krew/bin
+      set -gx PATH $PATH $HOME/.cargo/bin
       '';
       shellAliases = {
         dw = "darwin-rebuild switch --flake '.#heph'";
