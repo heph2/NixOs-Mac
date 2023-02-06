@@ -57,6 +57,7 @@
 #      "docker"
       "docker-compose"
       "qemu"
+      "wimlib"
       "spice-protocol"
       "podman"
       "wakeonlan"
