@@ -180,6 +180,14 @@ uniq -c";
              end
            '';
          };
+         __fish_win_iso_creater = {
+           body = ''
+             diskutil eraseDisk MS-DOS WINDOWS11 GPT $argv
+             set iso_volume (hdiutil mount $argv | awk '{ print $2 }')
+             rsync -exclude=sources/install.wim $iso_volume/* /Volumes/WINDOWS11
+             wimlib-imagex split /Volumes/$iso_volume/sources/install.wim /Volumes/WINDOWS11/sources/install.swm 3000
+           '';
+         };
       };
     };
   };
