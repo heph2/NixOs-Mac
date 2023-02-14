@@ -32,6 +32,8 @@
       "cyberduck"
       "epic-games"
       "chiaki"
+      "syncthing"
+      "zotero"
       "gimp"
       "chromium"
       "mumble"
@@ -51,10 +53,10 @@
       "raycast"
       "intellij-idea-ce"
       "utm"
+      "logseq"
       "karabiner-elements"
     ];
     brews = [
-#      "docker"
       "docker-compose"
       "qemu"
       "wimlib"
