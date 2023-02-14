@@ -118,6 +118,7 @@ with lib;
         plass-fish-edit = "__fish_plass-edit";
 	k-argo = "kubectl port-forward svc/argocd-server -n argocd 8080:443";
 	pod-start = "podman machine start";
+        cloudsql-staging= "cloud_sql_proxy -credential_file=/Users/marco/certs/key-cloudsql.json -instances=davinci-1eea1:europe-west3:postgres-staging=tcp:0.0.0.0:5432";
         k-prod = "k config use-context gke_davinci-1eea1_europe-west3_cluster-production";
         k-dev = "k config use-context gke_davinci-1eea1_europe-west3_cluster-dev";
         k-staging = "k config use-context gke_davinci-1eea1_europe-west3_cluster-staging";
@@ -182,10 +183,33 @@ uniq -c";
          };
          __fish_win_iso_creater = {
            body = ''
-             diskutil eraseDisk MS-DOS WINDOWS11 GPT $argv
-             set iso_volume (hdiutil mount $argv | awk '{ print $2 }')
-             rsync -exclude=sources/install.wim $iso_volume/* /Volumes/WINDOWS11
-             wimlib-imagex split /Volumes/$iso_volume/sources/install.wim /Volumes/WINDOWS11/sources/install.swm 3000
+             if test (count $argv) -lt 2
+                echo "You need to provide disk location (first arg) and iso location (second arg)"
+             else
+                echo "erasing disk..."
+                diskutil eraseDisk MS-DOS WINDOWS10 GPT $argv[1]
+                echo "mounting iso volume..."
+                set iso_volume (hdiutil mount $argv[2] | awk '{ print $2 }')
+                echo "copy files..."
+                rsync -exclude=sources/install.wim $iso_volume/* /Volumes/WINDOWS10
+                echo "still copying..."
+                wimlib-imagex split $iso_volume/sources/install.wim /Volumes/WINDOWS10/sources/install.swm 3000
+                echo "Done!"
+             end
+           '';
+         };
+         __fish_get_secret = {
+           body = ''
+             kubectl -n staging get secrets $argv[1] -o yaml | grep $argv[2] | awk '{ print $2 }' | base64 -d
+           '';
+         };
+         __fish_test = {
+           body = ''
+             if test (count $argv) -lt 2
+                echo "missing argv"
+             else
+                echo "this is first argv: $argv[1], this is the second: $argv[2]"
+             end
            '';
          };
       };
