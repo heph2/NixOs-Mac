@@ -114,6 +114,7 @@ with lib;
         k = "kubectl";
         c = "cargo";
         sat = "__fish_saturn";
+        clbin = "__fish_clbin";
         plass-fish = "__fish_plass";
         plass-fish-edit = "__fish_plass-edit";
 	k-argo = "kubectl port-forward svc/argocd-server -n argocd 8080:443";
@@ -201,6 +202,11 @@ uniq -c";
          __fish_get_secret = {
            body = ''
              kubectl -n staging get secrets $argv[1] -o yaml | grep $argv[2] | awk '{ print $2 }' | base64 -d
+           '';
+         };
+         __fish_clbin = {
+           body = ''
+             cat $argv[1] | curl -F 'clbin=<-' https://clbin.com | pbcopy
            '';
          };
          __fish_test = {
