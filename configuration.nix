@@ -37,6 +37,7 @@
       "gimp"
       "chromium"
       "mumble"
+      "koodo-reader"
       "docker"
       "insomnia"
       "android-platform-tools"
