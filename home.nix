@@ -117,7 +117,8 @@ with lib;
         clbin = "__fish_clbin";
         plass-fish = "__fish_plass";
         plass-fish-edit = "__fish_plass-edit";
-	k-argo = "kubectl port-forward svc/argocd-server -n argocd 8080:443";
+#	k-argo = "kubectl -n argocd port-forward svc/myargo-argocd-server 8080:80;
+#        argo-login = "argocd login --port-forward --port-forward-namespace=argocd --insecure --plaintext --username admin --password QQBBbVi1junkjcHI";
 	pod-start = "podman machine start";
         cloudsql-staging= "cloud_sql_proxy -credential_file=/Users/marco/certs/key-cloudsql.json -instances=davinci-1eea1:europe-west3:postgres-staging=tcp:0.0.0.0:5432";
         k-prod = "k config use-context gke_davinci-1eea1_europe-west3_cluster-production";
@@ -218,6 +219,29 @@ uniq -c";
              end
            '';
          };
+         __fish_generate-openssl-crt = {
+           body = ''
+             echo 'basicConstraints=CA:true' > /tmp/android_options.txt
+             openssl genrsa -out /tmp/priv_and_pub.key 2048
+             openssl req -new -days 3650 -key /tmp/priv_and_pub.key -out /tmp/CA.pem
+             openssl x509 -req -days 3650 -in /tmp/CA.pem -signkey /tmp/priv_and_pub.key -extfile /tmp/android_options.txt -out /tmp/CA.crt
+             openssl x509 -inform PEM -outform DER -in /tmp/CA.crt -out /tmp/CA.der.crt
+             echo "Certificate generated!"
+           '';
+         };
+         __fish_iap_grant = {
+           body = ''
+             set BACKEND_SERVICE (gcloud compute backend-services list --filter="name~'myargo-argocd-server'" --format="value(name)")
+             set SA_ACCOUNT m.bauce@davinci.care
+             set USER_EMAIL $argv[1]
+             gcloud iap web add-iam-policy-binding \
+                    --resource-type=backend-services \
+                    --service $BACKEND_SERVICE \
+                    --member=user:$USER_EMAIL \
+                    --role='roles/iap.httpsResourceAccessor' \
+                    --account=$SA_ACCOUNT
+           '';
+         };
       };
     };
   };
@@ -254,6 +278,7 @@ uniq -c";
     got
     wget
     terraform
+    caddy
     kubernetes-helm
     kubeseal
     kustomize
