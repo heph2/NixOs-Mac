@@ -277,6 +277,7 @@ uniq -c";
     gitflow
     got
     wget
+    postgresql
     terraform
     caddy
     kubernetes-helm
