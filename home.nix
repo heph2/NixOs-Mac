@@ -242,6 +242,13 @@ uniq -c";
                     --account=$SA_ACCOUNT
            '';
          };
+         __fish_random_line = {
+           body = ''
+             set NUM_LINES (cat $arvg[1] | wc -l)
+             set RANDOM_NUM (shuf -i 1-$NUM_LINES -n 1)
+             cat $argv[1] | sed -n $RANDOM_NUMp
+           '';
+         };
       };
     };
   };
@@ -278,6 +285,7 @@ uniq -c";
     got
     wget
     postgresql
+    coreutils
     terraform
     caddy
     kubernetes-helm
@@ -291,6 +299,7 @@ uniq -c";
     openssl    
     yamllint
     neovim
+    gnumake42
 #    ncdu
     mg
     nodePackages.npm
