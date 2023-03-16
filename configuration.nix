@@ -56,6 +56,7 @@
       "utm"
       "logseq"
       "karabiner-elements"
+      "vscodium"
     ];
     brews = [
       "docker-compose"
