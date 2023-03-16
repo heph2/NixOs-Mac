@@ -290,6 +290,7 @@ uniq -c";
     caddy
     kubernetes-helm
     kubeseal
+    vagrant
     kustomize
     k9s
     kubectl
