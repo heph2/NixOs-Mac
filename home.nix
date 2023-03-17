@@ -272,6 +272,7 @@ uniq -c";
     clojure
     dive
     tree
+    tshark
     act
     bitwarden-cli
     cmake
@@ -301,7 +302,7 @@ uniq -c";
     yamllint
     neovim
     gnumake42
-#    ncdu
+    libqalculate
     mg
     nodePackages.npm
     nodePackages.npm-check-updates
