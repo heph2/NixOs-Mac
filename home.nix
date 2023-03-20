@@ -119,6 +119,7 @@ with lib;
         plass-fish-edit = "__fish_plass-edit";
 #	k-argo = "kubectl -n argocd port-forward svc/myargo-argocd-server 8080:80;
 #        argo-login = "argocd login --port-forward --port-forward-namespace=argocd --insecure --plaintext --username admin --password QQBBbVi1junkjcHI";
+        webhook-inclinic = "curl -X POST -H 'Authorization: token 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' -H 'Accept: application/vnd.github.everest-preview+json' -d '{\"event_type\": \"webhook\"}' https://api.github.com/repos/DavinciSalute/davinci-test/dispatches";
 	pod-start = "podman machine start";
         cloudsql-staging= "cloud_sql_proxy -credential_file=/Users/marco/certs/key-cloudsql.json -instances=davinci-1eea1:europe-west3:postgres-staging=tcp:0.0.0.0:5432";
         k-prod = "k config use-context gke_davinci-1eea1_europe-west3_cluster-production";
