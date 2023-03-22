@@ -301,6 +301,7 @@ uniq -c";
     kubernetes-helm
     openssl    
     yamllint
+    kubo
     neovim
     gnumake42
     libqalculate
