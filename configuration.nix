@@ -20,6 +20,10 @@
   services.synapse-bt = {
     enable = true;
   };
+
+  services.tailscale = {
+    enable = true;
+  };
    
   homebrew = {
     enable = true;

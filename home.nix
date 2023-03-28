@@ -299,6 +299,9 @@ uniq -c";
     krew
     argocd
     kubernetes-helm
+    hexedit
+    ffmpeg
+    untrunc-anthwlock
     openssl    
     yamllint
     kubo
@@ -306,6 +309,7 @@ uniq -c";
     gnumake42
     libqalculate
     mg
+    swaks
     nodePackages.npm
     nodePackages.npm-check-updates
     nodejs
