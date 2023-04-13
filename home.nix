@@ -122,6 +122,7 @@ with lib;
         webhook-inclinic = "curl -X POST -H 'Authorization: token $GH_PAT_WH' -H 'Accept: application/vnd.github.everest-preview+json' -d '{\"event_type\": \"webhook\"}' https://api.github.com/repos/DavinciSalute/davinci-test/dispatches";
 	pod-start = "podman machine start";
         cloudsql-staging= "cloud_sql_proxy -credential_file=/Users/marco/certs/key-cloudsql.json -instances=davinci-1eea1:europe-west3:postgres-staging=tcp:0.0.0.0:5432";
+        t = "tailscale";
         k-prod = "k config use-context gke_davinci-1eea1_europe-west3_cluster-production";
         k-dev = "k config use-context gke_davinci-1eea1_europe-west3_cluster-dev";
         k-staging = "k config use-context gke_davinci-1eea1_europe-west3_cluster-staging";
@@ -318,5 +319,10 @@ uniq -c";
     perl
     openstackclient
     alacritty
+    innernet
+    wireguard-go
+    nginx
+    android-tools
+    tailscale
   ];
 }
