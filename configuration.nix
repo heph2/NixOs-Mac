@@ -12,6 +12,7 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
+  nix.distributedBuilds = true;
 
   services.emacs = {
     enable = true;
@@ -22,7 +23,7 @@
   };
 
   services.tailscale = {
-    enable = true;
+    enable = false;
   };
    
   homebrew = {
@@ -60,6 +61,7 @@
       "steam"
       "intellij-idea-ce"
       "utm"
+      "chiaki"
       "logseq"
       "karabiner-elements"
       "vscodium"
@@ -74,6 +76,7 @@
       "platformio"
       "esphome"
       "qt"
+      "magic-wormhole"
     ];
     taps = [
       {
