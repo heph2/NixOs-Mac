@@ -15,7 +15,7 @@
   nix.distributedBuilds = true;
 
   services.emacs = {
-    enable = true;
+    enable = false;
   };
 
   services.synapse-bt = {
@@ -31,9 +31,13 @@
     casks = [
       "telegram-desktop"
       "firefox"
+      "openlens"
       "xournal-plus-plus"
       "transmission"
       "vlc"
+      "mattermost"
+      "cog"
+      "balenaetcher"
       "cyberduck"
       "epic-games"
       "chiaki"
@@ -42,6 +46,7 @@
       "gimp"
       "chromium"
       "wireshark"
+      "iterm2"
       "mumble"
       "koodo-reader"
       "docker"
@@ -54,8 +59,10 @@
       "mpv"
       "airflow"
       "mumble"
+      "soulseek"
       "tunnelblick"
       "syncplay"
+      "emacs"
       "anydesk"
       "raycast"
       "steam"
@@ -65,6 +72,7 @@
       "logseq"
       "karabiner-elements"
       "vscodium"
+      "thunderbird"
     ];
     brews = [
       "docker-compose"
@@ -74,6 +82,7 @@
       "podman"
       "wakeonlan"
       "platformio"
+      "alpine"
       "esphome"
       "qt"
       "magic-wormhole"

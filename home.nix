@@ -3,27 +3,6 @@ with lib;
 {
   home.stateVersion = "22.05";
 
-#  home.activation = mkIf pkgs.stdenv.isDarwin {
-#      copyApplications = let
-#        apps = pkgs.buildEnv {
-#          name = "home-manager-applications";
-#          paths = config.home.packages;
-#          pathsToLink = "/Applications";
-#        };
-#      in lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-#        baseDir="$HOME/Applications/Home Manager Apps"
-#        if [ -d "$baseDir" ]; then
-#          rm -rf "$baseDir"
-#        fi
-#        mkdir -p "$baseDir"
-#        for appFile in ${apps}/Applications/*; do
-#          target="$baseDir/$(basename "$appFile")"
-#          $DRY_RUN_CMD cp ''${VERBOSE_ARG:+-v} -fHRL "$appFile" "$baseDir"
-#          $DRY_RUN_CMD chmod ''${VERBOSE_ARG:+-v} -R +w "$target"
-#        done
-#      '';
-#  };
-
   home.sessionVariables = {
     EDITOR = "mg";
     DOCKER_HOST = "tcp://192.168.1.4:2375";
@@ -37,7 +16,6 @@ with lib;
     msmtp.enable = true;
     emacs =  {
       enable = true;
-#      package = config.services.emacs.package;
       extraPackages = epkgs: [
         pkgs.mu
         pkgs.notmuch
@@ -72,6 +50,16 @@ with lib;
     fish = {
       enable = true;
       plugins = [
+        { name = "fzf"; src = pkgs.fishPlugins.fzf-fish.src; }
+        {
+          name = "z";
+          src = pkgs.fetchFromGitHub {
+          owner = "jethrokuan";
+          repo = "z";
+          rev = "e0e1b9dfdba362f8ab1ae8c1afc7ccf62b89f7eb";
+          sha256 = "0dbnir6jbwjpjalz14snzd3cgdysgcs3raznsijd6savad3qhijc";
+          };
+        }
         {
           name = "foreign-env";
           src = pkgs.fetchFromGitHub {
@@ -101,12 +89,14 @@ with lib;
       if test -e /nix/var/nix/profiles/default/etc/profile.d/nix.sh
         fenv source /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       end
-      source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
-      eval (direnv hook fish)
+      #source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
+      #eval (direnv hook fish)
       set -gx PATH $PATH $HOME/.krew/bin
       set -gx PATH $PATH $HOME/.cargo/bin
       '';
       shellAliases = {
+        imp = "mdirs ~/.maildir/personal | mlist -st | mthread -r | mseq -S; mless";
+        smp = "mdirs ~/.maildir/personal";
         dw = "darwin-rebuild switch --flake '.#heph'";
 	porte = "sudo lsof -nP -i4TCP:$PORT | grep LISTEN";
         wake-fenrir = "wakeonlan 00:d8:61:d8:be:d1";
@@ -117,17 +107,17 @@ with lib;
         clbin = "__fish_clbin";
         plass-fish = "__fish_plass";
         plass-fish-edit = "__fish_plass-edit";
-#	k-argo = "kubectl -n argocd port-forward svc/myargo-argocd-server 8080:80;
-#        argo-login = "argocd login --port-forward --port-forward-namespace=argocd --insecure --plaintext --username admin --password QQBBbVi1junkjcHI";
         webhook-inclinic = "curl -X POST -H 'Authorization: token $GH_PAT_WH' -H 'Accept: application/vnd.github.everest-preview+json' -d '{\"event_type\": \"webhook\"}' https://api.github.com/repos/DavinciSalute/davinci-test/dispatches";
 	pod-start = "podman machine start";
-        cloudsql-staging= "cloud_sql_proxy -credential_file=/Users/marco/certs/key-cloudsql.json -instances=davinci-1eea1:europe-west3:postgres-staging=tcp:0.0.0.0:5432";
+        cloudsql-staging= "cloud_sql_proxy -credential_file=/Users/marco/certs/gcp/key-cloudsql.json -instances=davinci-1eea1:europe-west3:postgres-staging=tcp:0.0.0.0:5432";
         t = "tailscale";
+        tempo = "curl https://wttr.in/NOVA_MILANESE";
         k-prod = "k config use-context gke_davinci-1eea1_europe-west3_cluster-production";
         k-dev = "k config use-context gke_davinci-1eea1_europe-west3_cluster-dev";
         k-staging = "k config use-context gke_davinci-1eea1_europe-west3_cluster-staging";
         k-innovators = "k config use-context gke_davinci-1eea1_europe-west3_cluster-innovators";
         k-test = "k config use-context gke_davinci-1eea1_europe-west1_autopilot-cluster-1";
+        k-fr = "k config use-context gke_fr-project-debf_europe-west1_gke-cluster";
         k-get-image = "kubectl get pods --all-namespaces -o jsonpath='{.items[*].spec.containers[*].image}' |\
 tr -s '[[:space:]]' '\n' |\
 sort |\
@@ -269,7 +259,7 @@ uniq -c";
   };
 
   home.packages = with pkgs; [
-    cowsay
+    aerc
     imagemagick
     clojure
     dive
@@ -281,6 +271,7 @@ uniq -c";
     netcat
     catgirl
     zathura
+    docker
     jq
     youtube-dl
     ytfzf
@@ -298,8 +289,11 @@ uniq -c";
     k9s
     kubectl
     krew
+    himalaya
+    mblaze
     argocd
     kubernetes-helm
+    cowsay
     hexedit
     ffmpeg
     untrunc-anthwlock
@@ -309,6 +303,7 @@ uniq -c";
     neovim
     gnumake42
     libqalculate
+    lazygit
     mg
     swaks
     nodePackages.npm
@@ -321,7 +316,12 @@ uniq -c";
     alacritty
     innernet
     wireguard-go
+    wireguard-tools
+    openvpn
+    easyrsa
     nginx
+    nmap
+    meld
     android-tools
     tailscale
   ];
