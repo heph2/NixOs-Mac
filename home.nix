@@ -5,7 +5,6 @@ with lib;
 
   home.sessionVariables = {
     EDITOR = "mg";
-    DOCKER_HOST = "tcp://192.168.1.4:2375";
   };
 
   programs = {
@@ -39,6 +38,7 @@ with lib;
       aliases = {
         gp = "add -p";
         co = "checkout";
+        s  = "switch";
       };
       extraConfig = {
         pull.ff = "only";
@@ -101,8 +101,11 @@ with lib;
 	porte = "sudo lsof -nP -i4TCP:$PORT | grep LISTEN";
         wake-fenrir = "wakeonlan 00:d8:61:d8:be:d1";
         d = "docker";
+        d-prune-containers = "docker rm $(docker ps -q --filter \"status=exited\")";
+        d-prune-images = "docker image rm -a";
         k = "kubectl";
         c = "cargo";
+        nerd = "colima nerdctl";
         sat = "__fish_saturn";
         clbin = "__fish_clbin";
         plass-fish = "__fish_plass";
@@ -113,11 +116,11 @@ with lib;
         t = "tailscale";
         tempo = "curl https://wttr.in/NOVA_MILANESE";
         k-prod = "k config use-context gke_davinci-1eea1_europe-west3_cluster-production";
-        k-dev = "k config use-context gke_davinci-1eea1_europe-west3_cluster-dev";
+        k-dev = "k config use-context gke_dev-project-00ad_europe-west1_gke-cluster";
         k-staging = "k config use-context gke_davinci-1eea1_europe-west3_cluster-staging";
         k-innovators = "k config use-context gke_davinci-1eea1_europe-west3_cluster-innovators";
         k-test = "k config use-context gke_davinci-1eea1_europe-west1_autopilot-cluster-1";
-        k-fr = "k config use-context gke_fr-project-debf_europe-west1_gke-cluster";
+        k-fr = "k config use-context gke_fr-agola-debf_europe-west1_gke-cluster-fr";
         k-get-image = "kubectl get pods --all-namespaces -o jsonpath='{.items[*].spec.containers[*].image}' |\
 tr -s '[[:space:]]' '\n' |\
 sort |\
@@ -262,6 +265,7 @@ uniq -c";
     aerc
     imagemagick
     clojure
+    colima
     dive
     tree
     tshark
@@ -284,7 +288,8 @@ uniq -c";
     caddy
     kubernetes-helm
     kubeseal
-    vagrant
+    packer
+    qemu
     kustomize
     k9s
     kubectl
@@ -297,6 +302,7 @@ uniq -c";
     hexedit
     ffmpeg
     untrunc-anthwlock
+    ansible
     openssl    
     yamllint
     kubo
@@ -305,12 +311,16 @@ uniq -c";
     libqalculate
     lazygit
     mg
+    k6
     swaks
     nodePackages.npm
+    nodePackages.pnpm
+    nodePackages.typescript
     nodePackages.npm-check-updates
     nodejs
     yarn
     python39
+    python39Packages.pip
     perl
     openstackclient
     alacritty
