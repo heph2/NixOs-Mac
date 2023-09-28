@@ -7,6 +7,8 @@
     extra-platforms = x86_64-darwin aarch64-darwin
   '';
 
+  users.users.marco.home = "/Users/marco";
+
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.zsh.enable = true;
 
@@ -30,6 +32,8 @@
     enable = true;
     casks = [
       "telegram-desktop"
+      "vagrant"
+      "vagrant-vmware-utility"
       "firefox"
       "openlens"
       "xournal-plus-plus"
@@ -39,12 +43,13 @@
       "cog"
       "balenaetcher"
       "cyberduck"
-      "epic-games"
       "chiaki"
       "syncthing"
       "zotero"
+      "vmware-fusion"
       "gimp"
       "chromium"
+      "element"
       "wireshark"
       "iterm2"
       "mumble"
@@ -64,8 +69,8 @@
       "syncplay"
       "emacs"
       "anydesk"
+      "obsidian"
       "raycast"
-      "steam"
       "intellij-idea-ce"
       "utm"
       "chiaki"
@@ -86,6 +91,7 @@
       "esphome"
       "qt"
       "magic-wormhole"
+      "k6"
     ];
     taps = [
       {
