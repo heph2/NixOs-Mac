@@ -5,6 +5,7 @@ with lib;
 
   home.sessionVariables = {
     EDITOR = "mg";
+#    DOCKER_HOST = "tcp://127.0.0.1:2375";
   };
 
   programs = {
@@ -21,7 +22,11 @@ with lib;
         pkgs.irony-server
       ];
     };
- 
+    nixvim = {
+      enable = true;
+      colorschemes.gruvbox.enable = true;
+      plugins.lightline.enable = true;
+    };
     tmux = {
       enable = true;
       shell = "/etc/profiles/per-user/marco/bin/fish";
@@ -93,6 +98,7 @@ with lib;
       #eval (direnv hook fish)
       set -gx PATH $PATH $HOME/.krew/bin
       set -gx PATH $PATH $HOME/.cargo/bin
+      set -gx PATH $PATH $HOME/.spicetify
       '';
       shellAliases = {
         imp = "mdirs ~/.maildir/personal | mlist -st | mthread -r | mseq -S; mless";
@@ -105,9 +111,9 @@ with lib;
         d-prune-images = "docker image rm -a";
         k = "kubectl";
         c = "cargo";
-        nerd = "colima nerdctl";
         sat = "__fish_saturn";
         clbin = "__fish_clbin";
+        vs = "codium";
         plass-fish = "__fish_plass";
         plass-fish-edit = "__fish_plass-edit";
         webhook-inclinic = "curl -X POST -H 'Authorization: token $GH_PAT_WH' -H 'Accept: application/vnd.github.everest-preview+json' -d '{\"event_type\": \"webhook\"}' https://api.github.com/repos/DavinciSalute/davinci-test/dispatches";
@@ -119,6 +125,7 @@ with lib;
         k-dev = "k config use-context gke_dev-project-00ad_europe-west1_gke-cluster";
         k-staging = "k config use-context gke_davinci-1eea1_europe-west3_cluster-staging";
         k-innovators = "k config use-context gke_davinci-1eea1_europe-west3_cluster-innovators";
+        k-mgmt = "k config use-context gke_mgmt-project-00ad_europe-west1_gke-cluster-mgmt";
         k-test = "k config use-context gke_davinci-1eea1_europe-west1_autopilot-cluster-1";
         k-fr = "k config use-context gke_fr-agola-debf_europe-west1_gke-cluster-fr";
         k-get-image = "kubectl get pods --all-namespaces -o jsonpath='{.items[*].spec.containers[*].image}' |\
@@ -266,6 +273,7 @@ uniq -c";
     imagemagick
     clojure
     colima
+    swc
     dive
     tree
     tshark
@@ -275,7 +283,7 @@ uniq -c";
     netcat
     catgirl
     zathura
-    docker
+    docker-client
     jq
     youtube-dl
     ytfzf
@@ -286,6 +294,7 @@ uniq -c";
     coreutils
     terraform
     caddy
+    bun
     kubernetes-helm
     kubeseal
     packer
@@ -294,25 +303,27 @@ uniq -c";
     k9s
     kubectl
     krew
-    himalaya
+    # himalaya
     mblaze
     argocd
     kubernetes-helm
     cowsay
     hexedit
+    spicetify-cli
     ffmpeg
     untrunc-anthwlock
     ansible
     openssl    
     yamllint
     kubo
-    neovim
     gnumake42
+    # kakoune
     libqalculate
     lazygit
     mg
     k6
     swaks
+    ngrok
     nodePackages.npm
     nodePackages.pnpm
     nodePackages.typescript
@@ -329,6 +340,7 @@ uniq -c";
     wireguard-tools
     openvpn
     easyrsa
+    ncdu
     nginx
     nmap
     meld

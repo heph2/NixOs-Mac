@@ -20,6 +20,14 @@
     enable = false;
   };
 
+  services.dnsmasq = {
+    enable = true;
+    addresses = {
+      localhost = "127.0.0.1";
+      lan = "192.168.1.30";
+    };
+  };
+
   services.synapse-bt = {
     enable = true;
   };
@@ -34,10 +42,15 @@
       "telegram-desktop"
       "vagrant"
       "vagrant-vmware-utility"
+      "cockatrice"
+      "spotify"
       "firefox"
       "openlens"
+      "nvidia-geforce-now"
       "xournal-plus-plus"
       "transmission"
+      "rectangle"
+      "logi-options-plus"
       "vlc"
       "mattermost"
       "cog"
@@ -54,7 +67,7 @@
       "iterm2"
       "mumble"
       "koodo-reader"
-      "docker"
+#      "docker"
       "insomnia"
       "android-platform-tools"
       "slack"
@@ -77,10 +90,11 @@
       "logseq"
       "karabiner-elements"
       "vscodium"
+      "webstorm"
       "thunderbird"
     ];
     brews = [
-      "docker-compose"
+#      "docker-compose"
       "qemu"
       "wimlib"
       "spice-protocol"
@@ -92,6 +106,8 @@
       "qt"
       "magic-wormhole"
       "k6"
+      "mongodb-atlas-cli"
+      "minidlna"
     ];
     taps = [
       {
