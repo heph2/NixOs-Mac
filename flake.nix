@@ -15,41 +15,20 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    cachix-deploy-flake.url = "github:cachix/cachix-deploy-flake";
+    cachix-deploy-flake.inputs.darwin.follows = "darwin";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = { self, darwin, nixpkgs, home-manager, nur, emacs, nixpkgs-unstable, nixvim, ... }: 
-    let
-      nixpkgsConfig = {
-        config = { allowUnfree = true; };
-      };
-    in {
-      darwinConfigurations."heph" = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [ 
-	        ./configuration.nix
-          nur.nixosModules.nur
-          # nixvim.homeManagerModules.nixvim
-	        home-manager.darwinModules.home-manager
-	        {
-	          nixpkgs = nixpkgsConfig;
-	          home-manager.useGlobalPkgs = true;
-	          home-manager.useUserPackages = true;
-	          home-manager.users.marco = import ./home.nix;
-            home-manager.sharedModules = [
-              nixvim.homeManagerModules.nixvim
-            ];
-	        }
-        ] ++ [
-        {
-          nix.settings.substituters = [
-            "https://cachix.org/api/v1/cache/emacs"
-          ];
-
-          nix.settings.trusted-public-keys = [
-            "emacs.cachix.org-1:b1SMJNLY/mZF6GxQE+eDBeps7WnkT0Po55TAyzwOxTY="
-          ];
-        }
-        ];
-      };
-    };
+outputs = inputs@{ flake-parts, ... }:
+  flake-parts.lib.mkFlake { inherit inputs; } {
+    imports = [
+      ./flake/aron/default.nix
+    ];
+    systems = [
+      # systems for which you want to build the `perSystem` attributes
+      "x86_64-linux"
+      "aarch64-darwin"
+    ];
+  };
 }

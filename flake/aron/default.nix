@@ -1,20 +1,20 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
-  flake.nixosConfigurations.aron = pkgs.lib.darwinSystem {
+  flake.darwinConfigurations.aron = inputs.darwin.lib.darwinSystem {
     system = "aarch64-darwin";
     modules = [ 
 	    ./configuration.nix
-      nur.nixosModules.nur
-	    home-manager.darwinModules.home-manager
+      {nixpkgs.config.allowUnfree = true;}
+      inputs.nur.nixosModules.nur
+	    inputs.home-manager.darwinModules.home-manager
 	    {
-	      nixpkgs = nixpkgsConfig;
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.marco = import ./home.nix;
-          home-manager.sharedModules = [
-            nixvim.homeManagerModules.nixvim
-          ];
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.marco = import ./home.nix;
+        home-manager.sharedModules = [
+          inputs.nixvim.homeManagerModules.nixvim
+        ];
       }
-    ]    
+    ];
   };
 }
