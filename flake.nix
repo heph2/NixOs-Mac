@@ -20,15 +20,15 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-outputs = inputs@{ flake-parts, ... }:
-  flake-parts.lib.mkFlake { inherit inputs; } {
-    imports = [
-      ./flake/aron/default.nix
-    ];
-    systems = [
-      # systems for which you want to build the `perSystem` attributes
-      "x86_64-linux"
-      "aarch64-darwin"
-    ];
-  };
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        ./flake/aron/default.nix
+      ];
+      systems = [
+        # systems for which you want to build the `perSystem` attributes
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
+    };
 }

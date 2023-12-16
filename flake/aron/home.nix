@@ -102,7 +102,7 @@ with lib;
       shellAliases = {
         imp = "mdirs ~/.maildir/personal | mlist -st | mthread -r | mseq -S; mless";
         smp = "mdirs ~/.maildir/personal";
-        dw = "darwin-rebuild switch --flake '.#heph'";
+        dw = "darwin-rebuild switch --flake '.#aron'";
 	    porte = "sudo lsof -nP -i4TCP:$PORT | grep LISTEN";
         wake-fenrir = "wakeonlan 00:d8:61:d8:be:d1";
         d = "docker";
