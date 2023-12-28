@@ -5,6 +5,7 @@ with lib;
 
   home.sessionVariables = {
     EDITOR = "mg";
+    LIMA_HOME = "$HOME/env/colima";
   };
 
   programs = {
@@ -301,7 +302,7 @@ uniq -c";
     kustomize
     k9s
     kubectl
-    krew
+    krew 
     mblaze
     argocd
     kubernetes-helm
