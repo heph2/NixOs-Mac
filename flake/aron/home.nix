@@ -14,6 +14,19 @@ with lib;
 
     htop.enable = true;
     msmtp.enable = true;
+#    ssh = {
+#      enable = true;
+#      agent = {
+#        enable = true;
+#        enableAutoStart = true;
+#      };
+#      matchBlocks = {
+#        fooServer = {
+#          port = 1022;
+#          hostname =  "example.com";
+#          user = "me";
+#        };
+#    };
     emacs =  {
       enable = true;
       extraPackages = epkgs: [
@@ -47,6 +60,13 @@ with lib;
       };
       extraConfig = {
         pull.ff = "only";
+        core.pager = "delta";
+        interactive.diffFilter = "delta --color-only";
+        delta = {
+	  navigate = true;
+          light = false;
+          side-by-side = true;
+        };
       };
       userEmail = "srht@mrkeebs.eu";
       userName = "heph";
@@ -94,8 +114,6 @@ with lib;
       if test -e /nix/var/nix/profiles/default/etc/profile.d/nix.sh
         fenv source /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       end
-      #source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
-      #eval (direnv hook fish)
       set -gx PATH $PATH $HOME/.krew/bin
       set -gx PATH $PATH $HOME/.cargo/bin
       set -gx PATH $PATH $HOME/.spicetify
@@ -128,6 +146,7 @@ with lib;
         k-mgmt = "k config use-context gke_mgmt-project-00ad_europe-west1_gke-cluster-mgmt";
         k-test = "k config use-context gke_davinci-1eea1_europe-west1_autopilot-cluster-1";
         k-fr = "k config use-context gke_fr-agola-debf_europe-west1_gke-cluster-fr";
+        k-welbee = "k config use-context gke_welbee-project-15da_europe-west1_gke-cluster-welbee";
         k-get-image = "kubectl get pods --all-namespaces -o jsonpath='{.items[*].spec.containers[*].image}' |\
 tr -s '[[:space:]]' '\n' |\
 sort |\
@@ -271,8 +290,13 @@ uniq -c";
   home.packages = with pkgs; [
     aerc
     imagemagick
+    yubikey-manager
     clojure
     colima
+    delta
+    starship
+    bat
+    fd
     swc
     dive
     tree
@@ -295,6 +319,7 @@ uniq -c";
     terraform
     caddy
     bun
+    nest-cli
     kubernetes-helm
     kubeseal
     packer
