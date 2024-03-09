@@ -79,7 +79,6 @@
       "soulseek"
       "tunnelblick"
       "syncplay"
-      "emacs"
       "anydesk"
       "obsidian"
       "raycast"
