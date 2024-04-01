@@ -18,7 +18,7 @@
     enable = true;
     addresses = {
       localhost = "127.0.0.1";
-      lan = "192.168.1.30";
+      # lan = "192.168.1.30";
     };
   };
 
