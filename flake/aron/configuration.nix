@@ -7,7 +7,23 @@
     extra-platforms = x86_64-darwin aarch64-darwin
 '';
 
-  users.users.marco.home = "/Users/marco";
+    nix.configureBuildUsers = true;
+#    ids.uids.nixbld = lib.mkForce 30000; # or some other uid
+    ids.uids.nixbld = 350;
+    nix.settings = {
+      substituters = [
+        https://cache.nixos.org
+        https://cache.nixos.org/
+        https://nix-community.cachix.org
+        https://emacs-overlay.cachix.org/
+      ];
+      trusted-public-keys = [
+        cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+                            nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+      ];
+    };
+
+    users.users.marco.home = "/Users/marco";
 
   programs.zsh.enable = true;
 
@@ -36,6 +52,8 @@
       "telegram-desktop"
       "vagrant"
       "yacreader"
+      "caffeine"
+      "alfred"
       "rustrover"
       "joplin"
       "logisim-evolution"
@@ -45,6 +63,7 @@
       "citra"
       "spotify"
       "firefox"
+      "mpv"
       "openlens"
       "nvidia-geforce-now"
       "shortcat"
@@ -68,12 +87,13 @@
       "mumble"
       "koodo-reader"
       "insomnia"
+      "bruno"
       "android-platform-tools"
       "slack"
       "blackhole-64ch"
       "google-cloud-sdk"
       "notion"
-      "mpv"
+      "bambu-studio"
       "airflow"
       "mumble"
       "soulseek"
@@ -81,7 +101,7 @@
       "syncplay"
       "anydesk"
       "obsidian"
-      "raycast"
+#      "raycast"
       "intellij-idea-ce"
       "utm"
       "chiaki"
@@ -90,6 +110,7 @@
       "vscodium"
       "webstorm"
       "thunderbird"
+      "whatsapp"
     ];
     brews = [
       "qemu"
@@ -118,8 +139,9 @@
   # `home-manager` currently has issues adding them to `~/Applications`
   # Issue: https://github.com/nix-community/home-manager/issues/1341
   environment.systemPackages = with pkgs; [
-    cachix
-    pass gnupg pinentry pinentry-curses
+    cachix granted
+    pass gnupg 
+    ### pinentry pinentry-curses
     isync mutt mu notmuch
     terminal-notifier
     go
@@ -133,8 +155,7 @@
   programs.nix-index.enable = true;
 
   # Fonts
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
      recursive
      nerdfonts
    ];
@@ -145,6 +166,9 @@
   system.keyboard.remapCapsLockToEscape = true;
   system.defaults.trackpad.TrackpadRightClick = true;
 
+
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;
+
+  system.stateVersion = 4;
 }
