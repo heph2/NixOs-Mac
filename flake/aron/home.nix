@@ -6,6 +6,8 @@ with lib; {
   home.sessionVariables = {
     EDITOR = "mg";
     LIMA_HOME = "$HOME/env/colima";
+    LEDGER_FILE = "~/env/finance/2024.journal";
+    GRANTED_ALIAS_CONFIGURED= "true";
   };
 
   programs = {
@@ -14,26 +16,6 @@ with lib; {
 
     htop.enable = true;
     msmtp.enable = true;
-    kakoune = {
-        enable = true;
-        plugins = with pkgs.kakounePlugins; [
-            kak-lsp kak-fzf auto-pairs-kak byline-kak
-        ];
-        config = {
-            colorScheme = "tomorrow-night";
-            scrollOff.columns = 3;
-            scrollOff.lines = 5;
-            ui.assistant = "dilbert";
-        };
-        extraConfig = ''
-        map global normal <c-v> ':comment-line<ret>'
-        map global normal <c-p> ':fzf-mode<ret>'
-        eval %sh{kak-lsp --kakoune -s $kak_session}
-        hook global WinSetOption filetype=(rust|go|python) %{
-            lsp-enable-window
-        }
-        '';
-    };    
     #    ssh = {
     #      enable = true;
     #      agent = {
@@ -47,16 +29,23 @@ with lib; {
     #          user = "me";
     #        };
     #    };
-    # emacs = {
-    #   enable = true;
-    #   package = pkgs.emacs-git;
-    #   extraPackages = epkgs: [ pkgs.mu pkgs.notmuch pkgs.irony-server ];
-    # };
-#    nixvim = {
-#      enable = true;
-#      colorschemes.gruvbox.enable = true;
-#      plugins.lightline.enable = true;
-#    };
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      syntaxHighlighting.enable = true;
+      shellAliases = {
+        ll = "ls -l";
+        update = "sudo nixos-rebuild switch";
+        assume = "source ${pkgs.granted}/bin/assume";
+        dw = "darwin-rebuild switch --flake '.#aron'";
+        k = "kubectl";
+      };
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" "thefuck" ];
+        theme = "robbyrussell";
+      };
+    };
     tmux = {
       enable = true;
       shell = "/etc/profiles/per-user/marco/bin/fish";
@@ -96,7 +85,7 @@ with lib; {
       mu.enable = true;
       primary = true;
     };
-  
+
     home.packages = with pkgs; [
       (pkgs.emacsWithPackagesFromUsePackage {
         config = ./emacs.el;
@@ -107,6 +96,7 @@ with lib; {
         extraEmacsPackages = epkgs: [
           # epkgs.mu epkgs.notmuch
           epkgs.vterm
+          epkgs.transient
           epkgs.notmuch
           epkgs.mu4e
           epkgs.pdf-tools
@@ -116,6 +106,8 @@ with lib; {
               tree-sitter-css
               tree-sitter-dockerfile
               tree-sitter-elisp
+              tree-sitter-go
+              tree-sitter-php
               tree-sitter-elixir
               tree-sitter-heex
               tree-sitter-html
@@ -139,14 +131,21 @@ with lib; {
       poppler
       ffmpegthumbnailer
       mediainfo
+      thefuck
       imagemagick
       yubikey-manager
       clojure
       colima
+      localsend
       delta
       starship
+#      devenv
       bat
+      #scream
       fd
+      hledger
+      ledger
+      wezterm
       swc
       dive
       tree
@@ -159,7 +158,7 @@ with lib; {
       zathura
       docker-client
       jq
-      youtube-dl
+#      youtube-dl
       ytfzf
       gitflow
       got
