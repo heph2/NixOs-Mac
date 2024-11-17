@@ -139,7 +139,7 @@ with lib; {
       localsend
       delta
       starship
-#      devenv
+      devenv
       bat
       #scream
       fd
