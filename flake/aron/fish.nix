@@ -44,6 +44,7 @@
       end
       set -gx PATH $PATH $HOME/.krew/bin
       set -gx PATH $PATH $HOME/.cargo/bin
+      set -gx PATH $PATH $HOME/Library/pnpm
       set -gx PATH $PATH $HOME/.spicetify
       '';
       shellAliases = {
@@ -75,6 +76,8 @@
         k-test = "k config use-context gke_davinci-1eea1_europe-west1_autopilot-cluster-1";
         k-fr = "k config use-context gke_fr-agola-debf_europe-west1_gke-cluster-fr";
         k-welbee = "k config use-context gke_welbee-project-15da_europe-west1_gke-cluster-welbee";
+        k-vc = "k config use-context gke_vc-project-1a79_europe-west1_gke-cluster-vc";
+        k-common = "k config use-context gke_common-project-bd8c_europe-west1_gke-cluster-common";
         k-get-image = "kubectl get pods --all-namespaces -o jsonpath='{.items[*].spec.containers[*].image}' |\
 tr -s '[[:space:]]' '\n' |\
 sort |\
