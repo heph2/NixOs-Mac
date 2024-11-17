@@ -141,7 +141,7 @@
   environment.systemPackages = with pkgs; [
     cachix granted
     pass gnupg 
-    ### pinentry pinentry-curses
+    pinentry_mac pinentry-curses
     isync mutt mu notmuch
     terminal-notifier
     go
