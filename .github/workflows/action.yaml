@@ -1,5 +1,5 @@
 ---
-name: "Test"
+name: "MacOs Nix build"
 on:
   push:
     branches:
@@ -16,5 +16,9 @@ jobs:
     - uses: cachix/install-nix-action@v20
       with:
         nix_path: nixpkgs=channel:nixos-unstable
+    - uses: cachix/cachix-action@v14
+      with:
+        name: heph2
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - uses: DeterminateSystems/magic-nix-cache-action@v2
     - run: nix build .#darwinConfigurations.${{ matrix.machine }}.config.system.build.toplevel
