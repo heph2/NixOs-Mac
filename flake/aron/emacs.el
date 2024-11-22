@@ -87,6 +87,9 @@
 (use-package nix-mode
   :mode ("\\.nix?\\'" . nix-mode))
 
+(use-package zig-mode
+  :mode ("\\.zig?\\'" . zig-mode))
+
 (use-package python-mode
   :mode ("\\.py?\\'" . python-mode))
 
@@ -104,6 +107,8 @@
                               ( :procMacro (:enable t)
                                 :cargo ( :buildScripts (:enable t)
                                          :features "all"))))))
+
+(use-package vundo)
 
 (use-package ibuffer
     :ensure nil
@@ -303,6 +308,11 @@
 (setq elysium-window-size 0.33) ; The elysium buffer will be 1/3 your screen
 (setq elysium-window-style 'vertical) ; Can be customized to horizontal
 
+(quelpa '(evedel
+	  :fetcher github
+          :stable nil
+	  :repo "daedsidog/evedel"))
+
 (use-package smerge-mode
   :ensure nil
   :hook
@@ -315,13 +325,15 @@
    gptel-backend (gptel-make-ollama "Ollama"
                    :host "192.168.1.18:11434"
                    :stream t
-                   :models '("qwen2.5-coder:latest"))))
+                   :models '("qwen2.5-coder:32b"))))
 
 (use-package vterm)
 
 (use-package kubel
   :after (vterm)
   :config (kubel-vterm-setup))
+
+
 
 ;; Manually load org-shortcut
 ;; (load "~/Downloads/org-shortcut.el")
