@@ -1,16 +1,17 @@
-{ 
+{
   description = "Marco's darwin system";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.05-darwin";
-    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     emacs.url = "github:cmacrae/emacs";
     emacs-overlay = {
-      url = "github:nix-community/emacs-overlay/db47b2483942771a725cf10e7cd3b1ec562750b7";
+      url =
+        "github:nix-community/emacs-overlay/db47b2483942771a725cf10e7cd3b1ec562750b7";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -26,12 +27,7 @@
 
   outputs = inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        ./flake/aron/default.nix
-      ];
-      systems = [
-        "x86_64-linux"
-        "aarch64-darwin"
-      ];
+      imports = [ ./flake/aron/default.nix ];
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
     };
 }
