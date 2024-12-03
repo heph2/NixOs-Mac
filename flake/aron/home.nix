@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 with lib; {
-  imports = [ ./fish.nix ];
+  imports = [
+    ./fish.nix
+    ./home-pkgs.nix
+  ];
 
   home.stateVersion = "22.05";
   home.sessionVariables = {
@@ -13,22 +16,8 @@ with lib; {
   programs = {
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
-
     htop.enable = true;
     msmtp.enable = true;
-    #    ssh = {
-    #      enable = true;
-    #      agent = {
-    #        enable = true;
-    #        enableAutoStart = true;
-    #      };
-    #      matchBlocks = {
-    #        fooServer = {
-    #          port = 1022;
-    #          hostname =  "example.com";
-    #          user = "me";
-    #        };
-    #    };
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -51,12 +40,10 @@ with lib; {
       shell = "/etc/profiles/per-user/marco/bin/fish";
       extraConfig = "setw -g mouse on";
     };
-
     fzf = {
       enable = true;
       enableFishIntegration = true;
     };
-
     git = {
       enable = true;
       aliases = {
@@ -77,6 +64,20 @@ with lib; {
       userEmail = "srht@mrkeebs.eu";
       userName = "heph";
     };
+    spicetify =
+      # let
+      #   spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
+      # in
+      {
+        enable = true;
+        # enabledExtensions = with spicePkgs.extensions; [
+        #   adblock
+        #   hidePodcasts
+        #   shuffle
+        # ];
+        # theme = spicePkgs.themes.catppuccin;
+        colorScheme = "mocha";
+      };
   };
 
   accounts.email.accounts."work" = {
@@ -85,140 +86,4 @@ with lib; {
     mu.enable = true;
     primary = true;
   };
-
-  home.packages = with pkgs; [
-    (pkgs.emacsWithPackagesFromUsePackage {
-      config = ./emacs.el;
-      defaultInitFile = true;
-      package = pkgs.emacs-git;
-      alwaysEnsure = true;
-      # alwaysTangle = true;
-      extraEmacsPackages = epkgs: [
-        # epkgs.mu epkgs.notmuch
-        epkgs.vterm
-        epkgs.transient
-        epkgs.notmuch
-        epkgs.mu4e
-        epkgs.pdf-tools
-        (epkgs.treesit-grammars.with-grammars (grammars:
-          with grammars; [
-            tree-sitter-bash
-            tree-sitter-css
-            tree-sitter-dockerfile
-            tree-sitter-elisp
-            tree-sitter-go
-            tree-sitter-php
-            tree-sitter-elixir
-            tree-sitter-heex
-            tree-sitter-html
-            tree-sitter-javascript
-            tree-sitter-json
-            tree-sitter-nix
-            tree-sitter-ruby
-            tree-sitter-rust
-            tree-sitter-toml
-            tree-sitter-tsx
-            tree-sitter-typescript
-            tree-sitter-yaml
-          ]))
-      ];
-    })
-    aerc
-    #      turbo
-    ### LSP
-    gopls
-    zls
-    zig
-    #      rust-analyzer
-    poppler
-    ffmpegthumbnailer
-    mediainfo
-    thefuck
-    imagemagick
-    yubikey-manager
-    clojure
-    colima
-    localsend
-    delta
-    starship
-    devenv
-    bat
-    #scream
-    fd
-    hledger
-    ledger
-    wezterm
-    swc
-    dive
-    tree
-    tshark
-    act
-    bitwarden-cli
-    cmake
-    netcat
-    catgirl
-    zathura
-    docker-client
-    jq
-    #      youtube-dl
-    ytfzf
-    gitflow
-    got
-    wget
-    postgresql
-    coreutils
-    terraform
-    caddy
-    bun
-    nest-cli
-    kubernetes-helm
-    kubeseal
-    packer
-    qemu
-    kustomize
-    k9s
-    kubectl
-    krew
-    mblaze
-    argocd
-    kubernetes-helm
-    cowsay
-    hexedit
-    spicetify-cli
-    ffmpeg
-    untrunc-anthwlock
-    ansible
-    openssl
-    yamllint
-    kubo
-    gnumake42
-    libqalculate
-    lazygit
-    mg
-    k6
-    swaks
-    ngrok
-    nodePackages.npm
-    nodePackages.pnpm
-    nodePackages.typescript
-    nodePackages.npm-check-updates
-    nodejs
-    yarn
-    python39
-    python39Packages.pip
-    perl
-    openstackclient
-    alacritty
-    innernet
-    wireguard-go
-    wireguard-tools
-    openvpn
-    easyrsa
-    #      ncdu
-    nginx
-    nmap
-    meld
-    android-tools
-    tailscale
-  ];
 }
