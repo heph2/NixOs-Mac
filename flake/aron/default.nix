@@ -14,7 +14,7 @@
         home-manager.useUserPackages = true;
         home-manager.users.marco = import ./home.nix;
         home-manager.sharedModules = [
-          #          inputs.nixvim.homeManagerModules.nixvim
+          inputs.spicetify-nix.homeManagerModules.default
         ];
       }
     ];

@@ -35,7 +35,8 @@
           `((".*" . ,(concat user-emacs-directory "backups")))
           auto-save-file-name-transforms
           `((".*" ,(concat user-emacs-directory "backups") t)))
-  (menu-bar-mode -1)
+  ;; (menu-bar-mode -1)
+  (menu-bar-mode t)
   (line-number-mode 1)
   (scroll-bar-mode -1)
   (tool-bar-mode -1))
@@ -203,7 +204,7 @@
   :config (direnv-mode))
 
 (use-package kubernetes)
-(use-package dockerfile-mode)
+;; (use-package dockerfile-mode)
 (use-package jsonnet-mode)
 (use-package terraform-mode)
 (use-package yaml-mode)
@@ -327,8 +328,31 @@
                    :stream t
                    :models '("qwen2.5-coder:32b"))))
 
-(use-package vterm)
+(use-package chatgpt-shell)
+(setq chatgpt-shell-model-version "qwen2.5-coder:32b")
+(setq chatgpt-shell-ollama-api-url-base "http://192.168.1.18:11434")
+(setq chatgpt-shell-api-url-base "http://192.168.1.18:11434")
+(setq chatgpt-shell-openai-key "")
+(setq chatgpt-shell-model-versions
+      '("qwen2.5-coder:32b"
+        "gemma:latest"
+        ))
 
+(setq chatgpt-shell-transmitted-context-length 8192)
+;; (setq chatgpt-shell-model-versions
+;;       '("gemma:2b-instruct"
+;;         "zephry:latest"
+;;         "codellama:instruct"
+;;         "magicoder:7b-s-cl-q4_0"
+;;         "starcoder:latest"
+;;         "deepseek-coder:1.3b-instruct-q5_1"
+;;         "qwen:1.8b"
+;;         "mistral:7b-instruct"
+;;         "orca-mini:7b"
+;;         "orca-mini:3b"
+;;         "openchat:7b-v3.5-q4_0"))
+
+(use-package vterm)
 (use-package kubel
   :after (vterm)
   :config (kubel-vterm-setup))
